@@ -33,7 +33,7 @@
 ===================== */
       .card {
         width: 90%;
-        max-width: 400px;
+        max-width: 600px;
         padding: 30px;
         text-align: center;
 
@@ -123,6 +123,32 @@
         text-decoration: underline;
       }
 
+      .nama-cinta {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        color: #ff4d6d;
+        opacity: 0;
+        animation: fadeNama 1.2s ease forwards;
+      }
+
+      .nama-cinta span {
+        font-family: "Pacifico", cursive;
+        font-size: 1.4rem;
+        display: block;
+        margin-top: 4px;
+      }
+
+      @keyframes fadeNama {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       /* =====================
    ANIMATION
 ===================== */
@@ -142,7 +168,14 @@
   <body>
     <div class="card">
       <h1>Coba Bikin Harapan Kamu💕</h1>
-      <input id="nama" placeholder="Nama kamu 💖" />
+      <div class="nama-cinta">
+        <span>
+          Untuk <br />
+          Nuryusriatul Watsik</span
+        >
+        💖
+      </div>
+      <input id="nama" value="Nuryusriatul Watsik" type="hidden" />
       <textarea id="pesan" rows="4" placeholder="Harapan Kamu💌"></textarea>
       <button onclick="kirim()">🌸 Buat Harapan 🌸</button>
       <div class="status" id="status"></div>
@@ -209,6 +242,8 @@
           status.innerText = "💔 Jangan kosong yaa~";
           return;
         }
+
+        localStorage.setItem("namaCinta", nama);
 
         const formData = new FormData();
         formData.append("nama", nama);

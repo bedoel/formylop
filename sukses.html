@@ -57,6 +57,44 @@
         background: #ff758f;
       }
 
+      /* cursor ketik */
+      .cursor {
+        display: inline-block;
+        margin-left: 3px;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        50%,
+        100% {
+          opacity: 1;
+        }
+        25%,
+        75% {
+          opacity: 0;
+        }
+      }
+
+      /* love particle */
+      .love {
+        position: fixed;
+        font-size: 18px;
+        pointer-events: none;
+        animation: floatUp 2.5s ease-out forwards;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-120px) scale(1.6);
+          opacity: 0;
+        }
+      }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -72,11 +110,8 @@
 
   <body>
     <div class="box">
-      <h1>💖 Semoga Harapan Kamu Terkabul 💖</h1>
-      <p>
-        Terima kasih sudah menuliskan harapanmu.<br />
-        Semesta sedang mendengarkan 🌸
-      </p>
+      <h1 id="sapaan"><span id="text"></span><span class="cursor">|</span></h1>
+      <p id="pesan-utama"></p>
 
       <button class="next-page-button">
         Semoga Doa kamu dikabulkan ya sayanggg❤️
@@ -128,6 +163,54 @@
     window.addEventListener("beforeunload", () => {
       localStorage.setItem("audioTime", audio.currentTime);
     });
+  </script>
+  <script>
+    const nama = localStorage.getItem("namaCinta") || "Kamu";
+    const sapaanText = `Hai ${nama} 💕`;
+    const pesanText =
+      "Terima kasih sudah menuliskan harapanmu.\nSemesta sedang mendengarkan 🌸";
+
+    const textEl = document.getElementById("text");
+    const pesanEl = document.getElementById("pesan-utama");
+
+    let i = 0;
+
+    function ketikSapaan() {
+      if (i < sapaanText.length) {
+        textEl.textContent += sapaanText.charAt(i);
+        i++;
+        setTimeout(ketikSapaan, 90);
+      } else {
+        // selesai ketik nama → munculin love particle
+        loveBoom();
+        setTimeout(ketikPesan, 400);
+      }
+    }
+
+    let j = 0;
+    function ketikPesan() {
+      if (j < pesanText.length) {
+        pesanEl.textContent += pesanText.charAt(j);
+        j++;
+        setTimeout(ketikPesan, 35);
+      }
+    }
+
+    function loveBoom() {
+      for (let i = 0; i < 20; i++) {
+        const love = document.createElement("div");
+        love.className = "love";
+        love.innerText = "💖";
+        love.style.left = 45 + Math.random() * 10 + "vw";
+        love.style.top = 50 + Math.random() * 10 + "vh";
+        love.style.fontSize = 14 + Math.random() * 20 + "px";
+        document.body.appendChild(love);
+
+        setTimeout(() => love.remove(), 2500);
+      }
+    }
+
+    ketikSapaan();
   </script>
 
   <script>
