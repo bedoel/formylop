@@ -149,6 +149,39 @@
         }
       }
 
+      .love-meter {
+        margin: 15px 0 20px;
+        padding: 15px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .love-title {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        color: #ff4d6d;
+        font-weight: 600;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: #ff4d6d;
+      }
+
+      .love-percent {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #ff4d6d;
+        margin-top: 5px;
+      }
+
+      .love-text {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #ff4d6d;
+        font-style: italic;
+      }
+
       /* =====================
    ANIMATION
 ===================== */
@@ -167,15 +200,22 @@
 
   <body>
     <div class="card">
-      <h1>Coba Bikin Harapan Kamu💕</h1>
+      <h1>Coba Bikin Harapan💕 dan Pesan buat aku😚</h1>
       <div class="nama-cinta">
-        <span>
-          Untuk <br />
-          Nuryusriatul Watsik</span
-        >
+        <span>Nuryusriatul Watsik</span>
         💖
       </div>
       <input id="nama" value="Nuryusriatul Watsik" type="hidden" />
+      <div class="love-meter">
+        <p class="love-title">Seberapa cinta kamu sama aku? 💕</p>
+
+        <input type="range" min="0" max="100" value="50" id="loveRange" />
+
+        <div class="love-percent"><span id="loveValue">50</span>%</div>
+
+        <div class="love-text" id="loveText">Hmm… masih malu-malu ya 😆</div>
+      </div>
+
       <textarea id="pesan" rows="4" placeholder="Harapan Kamu💌"></textarea>
       <button onclick="kirim()">🌸 Buat Harapan 🌸</button>
       <div class="status" id="status"></div>
@@ -228,7 +268,7 @@
 
     <script>
       const scriptURL =
-        "https://script.google.com/macros/s/AKfycbxDJDBGNz-TAX9MqUnk8S4o2nQw63tIiJmQR5828AalrmhwQNuzQav-Oj9k4tpcRMjOJw/exec";
+        "https://script.google.com/macros/s/AKfycbxIfIoizs_1dmSMFuYIP_Hx0dFXTnLeWKumH69UrsfTiLjifG-8bddv6uwWfgkbvw68BQ/exec";
 
       function kirim() {
         const namaInput = document.getElementById("nama");
@@ -248,6 +288,7 @@
         const formData = new FormData();
         formData.append("nama", nama);
         formData.append("pesan", pesan);
+        formData.append("cinta", range.value);
 
         fetch(scriptURL, {
           method: "POST",
@@ -263,6 +304,28 @@
             console.error(err);
           });
       }
+    </script>
+    <script>
+      const range = document.getElementById("loveRange");
+      const value = document.getElementById("loveValue");
+      const text = document.getElementById("loveText");
+
+      const messages = [
+        { max: 20, text: "Kok segini doang? 😭" },
+        { max: 40, text: "Masih ragu yaa… 🥺" },
+        { max: 60, text: "Hmm mulai kerasa nih 😌" },
+        { max: 80, text: "Wah udah cinta yaa 😍" },
+        { max: 99, text: "Bucin level tinggi 💖" },
+        { max: 100, text: "FIX CINTA MATI 😭❤️" },
+      ];
+
+      range.addEventListener("input", () => {
+        const val = range.value;
+        value.textContent = val;
+
+        const msg = messages.find((m) => val <= m.max);
+        text.textContent = msg.text;
+      });
     </script>
   </body>
 </html>
