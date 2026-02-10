@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Cantik</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tangkap Kelincinya! 🐰</h1>
+      <p>Harus menangkap 10 kelinci untuk ke halaman selanjutnya.</p>
+
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+
+      <p class="counter">Love yang Ditangkap: <span id="score">0</span>/10</p>
+
+      <div id="game-area"></div>
+    </div>
+
+    <canvas id="particles"></canvas>
+
+    <script src="js/script.js"></script>
+
+    <audio id="bg-music" loop autoplay muted>
+      <source src="../music/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      const audio = document.getElementById("bg-music");
+
+      // lanjutkan dari waktu terakhir
+      audio.addEventListener("loadedmetadata", () => {
+        const savedTime = localStorage.getItem("audioTime");
+        if (savedTime) {
+          audio.currentTime = parseFloat(savedTime);
+        }
+      });
+
+      // coba autoplay langsung
+      audio
+        .play()
+        .then(() => {
+          audio.muted = false;
+        })
+        .catch(() => {});
+
+      // fallback: klik pertama
+      function unlockAudio() {
+        audio.muted = false;
+        audio.play().catch(() => {});
+        document.removeEventListener("click", unlockAudio);
+        document.removeEventListener("touchstart", unlockAudio);
+      }
+
+      document.addEventListener("click", unlockAudio);
+      document.addEventListener("touchstart", unlockAudio);
+
+      // simpan posisi lagu
+      setInterval(() => {
+        if (!audio.paused) {
+          localStorage.setItem("audioTime", audio.currentTime);
+        }
+      }, 1000);
+
+      window.addEventListener("beforeunload", () => {
+        localStorage.setItem("audioTime", audio.currentTime);
+      });
+    </script>
+  </body>
+</html>

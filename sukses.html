@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Harapanmu 💕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #fad0c4, #ff9a9e);
+      }
+
+      .box {
+        padding: 40px 30px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.35);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 1s ease;
+      }
+
+      h1 {
+        font-family: "Pacifico", cursive;
+        color: #ff4d6d;
+        margin-bottom: 15px;
+      }
+
+      p {
+        color: #444;
+        font-size: 1rem;
+      }
+
+      .next-page-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 25px;
+        border-radius: 25px;
+        background: #ff4d6d;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .next-page-button:hover {
+        background: #ff758f;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <h1>💖 Semoga Harapan Kamu Terkabul 💖</h1>
+      <p>
+        Terima kasih sudah menuliskan harapanmu.<br />
+        Semesta sedang mendengarkan 🌸
+      </p>
+
+      <button class="next-page-button">
+        Semoga Doa kamu dikabulkan ya sayanggg❤️
+      </button>
+      <button></button>
+    </div>
+    <audio id="bg-music" loop autoplay muted>
+      <source src="music/song.mp3" type="audio/mpeg" />
+    </audio>
+  </body>
+
+  <script>
+    const audio = document.getElementById("bg-music");
+
+    // lanjutkan dari waktu terakhir
+    audio.addEventListener("loadedmetadata", () => {
+      const savedTime = localStorage.getItem("audioTime");
+      if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+      }
+    });
+
+    // coba autoplay langsung
+    audio
+      .play()
+      .then(() => {
+        audio.muted = false;
+      })
+      .catch(() => {});
+
+    // fallback: klik pertama
+    function unlockAudio() {
+      audio.muted = false;
+      audio.play().catch(() => {});
+      document.removeEventListener("click", unlockAudio);
+      document.removeEventListener("touchstart", unlockAudio);
+    }
+
+    document.addEventListener("click", unlockAudio);
+    document.addEventListener("touchstart", unlockAudio);
+
+    // simpan posisi lagu
+    setInterval(() => {
+      if (!audio.paused) {
+        localStorage.setItem("audioTime", audio.currentTime);
+      }
+    }, 1000);
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem("audioTime", audio.currentTime);
+    });
+  </script>
+
+  <script>
+    // Add button click handler
+    document
+      .querySelector(".next-page-button")
+      .addEventListener("click", () => {
+        // You can replace this with your actual next page URL
+        window.location.href = "game/";
+      });
+  </script>
+</html>

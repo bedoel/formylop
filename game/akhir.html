@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Untuk Kamu 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        overflow: hidden;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.35);
+        backdrop-filter: blur(12px);
+        padding: 40px 30px;
+        border-radius: 30px;
+        max-width: 420px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 1.2s ease;
+      }
+
+      h1 {
+        font-family: "Pacifico", cursive;
+        color: #ff4d6d;
+        margin-bottom: 15px;
+        font-size: 2.2rem;
+      }
+
+      p {
+        color: #444;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .heart {
+        font-size: 3rem;
+        animation: pulse 1.5s infinite;
+      }
+
+      button {
+        margin-top: 25px;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #ff4d6d, #ff758f);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+      .valentine {
+        font-family: "Pacifico", cursive;
+        color: #ff2d55;
+        margin-bottom: 12px;
+        font-size: 1.5rem;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* love jatuh */
+      .love {
+        position: absolute;
+        top: -20px;
+        font-size: 20px;
+        animation: fall linear infinite;
+        opacity: 0.8;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="heart">💖</div>
+      <h1>Kamu Berhasil!</h1>
+      <h2 class="valentine">💝 Selamat Hari Valentine 💝</h2>
+      <p style="margin-top: -5px; color: #ff4d6d">
+        Hari ini spesial, karena ada kamu 💕
+      </p>
+
+      <p>
+        Makasih sudah main sampai akhir 🥰
+        <br /><br />
+        Semoga hari-harimu selalu penuh cinta, tawa, dan hal-hal kecil yang
+        bikin kamu bahagia.
+      </p>
+
+      <p><b>Aku doain semua harapanmu terkabul 💕</b></p>
+
+      <button onclick="alert('Aku serius 💖')">Peluk Virtual 🤗</button>
+    </div>
+
+    <audio id="bg-music" loop autoplay muted>
+      <source src="../music/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      const audio = document.getElementById("bg-music");
+
+      // lanjutkan dari waktu terakhir
+      audio.addEventListener("loadedmetadata", () => {
+        const savedTime = localStorage.getItem("audioTime");
+        if (savedTime) {
+          audio.currentTime = parseFloat(savedTime);
+        }
+      });
+
+      // coba autoplay langsung
+      audio
+        .play()
+        .then(() => {
+          audio.muted = false;
+        })
+        .catch(() => {});
+
+      // fallback: klik pertama
+      function unlockAudio() {
+        audio.muted = false;
+        audio.play().catch(() => {});
+        document.removeEventListener("click", unlockAudio);
+        document.removeEventListener("touchstart", unlockAudio);
+      }
+
+      document.addEventListener("click", unlockAudio);
+      document.addEventListener("touchstart", unlockAudio);
+
+      // simpan posisi lagu
+      setInterval(() => {
+        if (!audio.paused) {
+          localStorage.setItem("audioTime", audio.currentTime);
+        }
+      }, 1000);
+
+      window.addEventListener("beforeunload", () => {
+        localStorage.setItem("audioTime", audio.currentTime);
+      });
+    </script>
+
+    <!-- love jatuh -->
+    <script>
+      for (let i = 0; i < 20; i++) {
+        const love = document.createElement("div");
+        love.className = "love";
+        love.innerHTML = "❤️";
+        love.style.left = Math.random() * 100 + "vw";
+        love.style.animationDuration = 3 + Math.random() * 5 + "s";
+        love.style.fontSize = 16 + Math.random() * 20 + "px";
+        document.body.appendChild(love);
+      }
+    </script>
+  </body>
+</html>
