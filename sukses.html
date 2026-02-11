@@ -57,7 +57,6 @@
         background: #ff758f;
       }
 
-      /* cursor ketik */
       .cursor {
         display: inline-block;
         margin-left: 3px;
@@ -76,7 +75,6 @@
         }
       }
 
-      /* love particle */
       .love {
         position: fixed;
         font-size: 18px;
@@ -125,7 +123,6 @@
   <script>
     const audio = document.getElementById("bg-music");
 
-    // lanjutkan dari waktu terakhir
     audio.addEventListener("loadedmetadata", () => {
       const savedTime = localStorage.getItem("audioTime");
       if (savedTime) {
@@ -133,7 +130,6 @@
       }
     });
 
-    // coba autoplay langsung
     audio
       .play()
       .then(() => {
@@ -141,7 +137,6 @@
       })
       .catch(() => {});
 
-    // fallback: klik pertama
     function unlockAudio() {
       audio.muted = false;
       audio.play().catch(() => {});
@@ -152,7 +147,6 @@
     document.addEventListener("click", unlockAudio);
     document.addEventListener("touchstart", unlockAudio);
 
-    // simpan posisi lagu
     setInterval(() => {
       if (!audio.paused) {
         localStorage.setItem("audioTime", audio.currentTime);
@@ -180,7 +174,6 @@
         i++;
         setTimeout(ketikSapaan, 90);
       } else {
-        // selesai ketik nama → munculin love particle
         loveBoom();
         setTimeout(ketikPesan, 400);
       }
@@ -213,11 +206,9 @@
   </script>
 
   <script>
-    // Add button click handler
     document
       .querySelector(".next-page-button")
       .addEventListener("click", () => {
-        // You can replace this with your actual next page URL
         window.location.href = "game/";
       });
   </script>

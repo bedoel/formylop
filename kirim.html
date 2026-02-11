@@ -11,9 +11,6 @@
     />
 
     <style>
-      /* =====================
-   RESET & BASE
-===================== */
       * {
         box-sizing: border-box;
       }
@@ -28,9 +25,6 @@
         font-family: "Poppins", sans-serif;
       }
 
-      /* =====================
-   CARD
-===================== */
       .card {
         width: 90%;
         max-width: 600px;
@@ -45,9 +39,6 @@
         animation: fadeIn 0.8s ease;
       }
 
-      /* =====================
-   TEXT
-===================== */
       h1 {
         margin-bottom: 15px;
         font-family: "Pacifico", cursive;
@@ -60,9 +51,6 @@
         color: #ff4d6d;
       }
 
-      /* =====================
-   FORM
-===================== */
       input,
       textarea {
         width: 100%;
@@ -80,9 +68,6 @@
         resize: none;
       }
 
-      /* =====================
-   BUTTON
-===================== */
       button {
         width: 100%;
         padding: 12px;
@@ -107,9 +92,6 @@
         box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
       }
 
-      /* =====================
-   LINK
-===================== */
       a {
         display: inline-block;
         margin-top: 10px;
@@ -182,9 +164,6 @@
         font-style: italic;
       }
 
-      /* =====================
-   ANIMATION
-===================== */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -227,7 +206,6 @@
     <script>
       const audio = document.getElementById("bg-music");
 
-      // lanjutkan dari waktu terakhir
       audio.addEventListener("loadedmetadata", () => {
         const savedTime = localStorage.getItem("audioTime");
         if (savedTime) {
@@ -235,7 +213,6 @@
         }
       });
 
-      // coba autoplay langsung
       audio
         .play()
         .then(() => {
@@ -243,7 +220,6 @@
         })
         .catch(() => {});
 
-      // fallback: klik pertama
       function unlockAudio() {
         audio.muted = false;
         audio.play().catch(() => {});
@@ -254,7 +230,6 @@
       document.addEventListener("click", unlockAudio);
       document.addEventListener("touchstart", unlockAudio);
 
-      // simpan posisi lagu
       setInterval(() => {
         if (!audio.paused) {
           localStorage.setItem("audioTime", audio.currentTime);
@@ -295,7 +270,6 @@
           body: formData,
         })
           .then(() => {
-            // kasih jeda dikit biar terasa manis 🥰
             window.location.href = "sukses.html";
           })
 

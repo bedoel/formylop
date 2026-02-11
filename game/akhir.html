@@ -97,7 +97,6 @@
         }
       }
 
-      /* love jatuh */
       .love {
         position: absolute;
         top: -20px;
@@ -142,7 +141,6 @@
     <script>
       const audio = document.getElementById("bg-music");
 
-      // lanjutkan dari waktu terakhir
       audio.addEventListener("loadedmetadata", () => {
         const savedTime = localStorage.getItem("audioTime");
         if (savedTime) {
@@ -150,7 +148,6 @@
         }
       });
 
-      // coba autoplay langsung
       audio
         .play()
         .then(() => {
@@ -158,7 +155,6 @@
         })
         .catch(() => {});
 
-      // fallback: klik pertama
       function unlockAudio() {
         audio.muted = false;
         audio.play().catch(() => {});
@@ -169,7 +165,6 @@
       document.addEventListener("click", unlockAudio);
       document.addEventListener("touchstart", unlockAudio);
 
-      // simpan posisi lagu
       setInterval(() => {
         if (!audio.paused) {
           localStorage.setItem("audioTime", audio.currentTime);
@@ -181,7 +176,6 @@
       });
     </script>
 
-    <!-- love jatuh -->
     <script>
       for (let i = 0; i < 20; i++) {
         const love = document.createElement("div");

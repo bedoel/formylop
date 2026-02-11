@@ -82,7 +82,6 @@
     <script>
       const audio = document.getElementById("bg-music");
 
-      // lanjutkan dari waktu terakhir
       audio.addEventListener("loadedmetadata", () => {
         const savedTime = localStorage.getItem("audioTime");
         if (savedTime) {
@@ -90,7 +89,6 @@
         }
       });
 
-      // coba play langsung
       audio
         .play()
         .then(() => {
@@ -98,7 +96,6 @@
         })
         .catch(() => {});
 
-      // fallback: unmute & play saat klik pertama
       function unlockAudio() {
         audio.muted = false;
         audio.play().catch(() => {});
@@ -109,7 +106,6 @@
       document.addEventListener("click", unlockAudio);
       document.addEventListener("touchstart", unlockAudio);
 
-      // simpan waktu
       setInterval(() => {
         if (!audio.paused) {
           localStorage.setItem("audioTime", audio.currentTime);
